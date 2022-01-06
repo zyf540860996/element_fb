@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import scrollbarWidth from 'element-ui/src/utils/scrollbar-width';
+import scrollbarWidth from 'nasinet-element-ui_fb/src/utils/scrollbar-width';
 import { parseHeight } from './util';
 
 class TableLayout {
@@ -78,7 +78,7 @@ class TableLayout {
   getFlattenColumns() {
     const flattenColumns = [];
     const columns = this.table.columns;
-    columns.forEach((column) => {
+    columns.forEach(column => {
       if (column.isColumnGroup) {
         flattenColumns.push.apply(flattenColumns, column.columns);
       } else {
@@ -100,16 +100,16 @@ class TableLayout {
     const headerTrElm = headerWrapper ? headerWrapper.querySelector('.el-table__header tr') : null;
     const noneHeader = this.headerDisplayNone(headerTrElm);
 
-    const headerHeight = this.headerHeight = !this.showHeader ? 0 : headerWrapper.offsetHeight;
+    const headerHeight = (this.headerHeight = !this.showHeader ? 0 : headerWrapper.offsetHeight);
     if (this.showHeader && !noneHeader && headerWrapper.offsetWidth > 0 && (this.table.columns || []).length > 0 && headerHeight < 2) {
       return Vue.nextTick(() => this.updateElsHeight());
     }
-    const tableHeight = this.tableHeight = this.table.$el.clientHeight;
-    const footerHeight = this.footerHeight = footerWrapper ? footerWrapper.offsetHeight : 0;
+    const tableHeight = (this.tableHeight = this.table.$el.clientHeight);
+    const footerHeight = (this.footerHeight = footerWrapper ? footerWrapper.offsetHeight : 0);
     if (this.height !== null) {
       this.bodyHeight = tableHeight - headerHeight - footerHeight + (footerWrapper ? 1 : 0);
     }
-    this.fixedBodyHeight = this.scrollX ? (this.bodyHeight - this.gutterWidth) : this.bodyHeight;
+    this.fixedBodyHeight = this.scrollX ? this.bodyHeight - this.gutterWidth : this.bodyHeight;
 
     const noData = !(this.store.states.data && this.store.states.data.length);
     this.viewportHeight = this.scrollX ? tableHeight - (noData ? 0 : this.gutterWidth) : tableHeight;
@@ -136,20 +136,22 @@ class TableLayout {
     let bodyMinWidth = 0;
 
     const flattenColumns = this.getFlattenColumns();
-    let flexColumns = flattenColumns.filter((column) => typeof column.width !== 'number');
+    let flexColumns = flattenColumns.filter(column => typeof column.width !== 'number');
 
-    flattenColumns.forEach((column) => { // Clean those columns whose width changed from flex to unflex
+    flattenColumns.forEach(column => {
+      // Clean those columns whose width changed from flex to unflex
       if (typeof column.width === 'number' && column.realWidth) column.realWidth = null;
     });
 
     if (flexColumns.length > 0 && fit) {
-      flattenColumns.forEach((column) => {
+      flattenColumns.forEach(column => {
         bodyMinWidth += column.width || column.minWidth || 80;
       });
 
       const scrollYWidth = this.scrollY ? this.gutterWidth : 0;
 
-      if (bodyMinWidth <= bodyWidth - scrollYWidth) { // DON'T HAVE SCROLL BAR
+      if (bodyMinWidth <= bodyWidth - scrollYWidth) {
+        // DON'T HAVE SCROLL BAR
         this.scrollX = false;
 
         const totalFlexWidth = bodyWidth - scrollYWidth - bodyMinWidth;
@@ -170,7 +172,8 @@ class TableLayout {
 
           flexColumns[0].realWidth = (flexColumns[0].minWidth || 80) + totalFlexWidth - noneFirstWidth;
         }
-      } else { // HAVE HORIZONTAL SCROLL BAR
+      } else {
+        // HAVE HORIZONTAL SCROLL BAR
         this.scrollX = true;
         flexColumns.forEach(function(column) {
           column.realWidth = column.minWidth;
@@ -180,7 +183,7 @@ class TableLayout {
       this.bodyWidth = Math.max(bodyMinWidth, bodyWidth);
       this.table.resizeState.width = this.bodyWidth;
     } else {
-      flattenColumns.forEach((column) => {
+      flattenColumns.forEach(column => {
         if (!column.width && !column.minWidth) {
           column.realWidth = 80;
         } else {
@@ -231,7 +234,7 @@ class TableLayout {
 
   notifyObservers(event) {
     const observers = this.observers;
-    observers.forEach((observer) => {
+    observers.forEach(observer => {
       switch (event) {
         case 'columns':
           observer.onColumnsChange(this);

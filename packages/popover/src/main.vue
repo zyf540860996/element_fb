@@ -1,9 +1,6 @@
 <template>
   <span>
-    <transition
-      :name="transition"
-      @after-enter="handleAfterEnter"
-      @after-leave="handleAfterLeave">
+    <transition :name="transition" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
       <div
         class="el-popover el-popper"
         :class="[popperClass, content && 'el-popover--plain']"
@@ -12,22 +9,22 @@
         :style="{ width: width + 'px' }"
         role="tooltip"
         :id="tooltipId"
-        :aria-hidden="(disabled || !showPopper) ? 'true' : 'false'"
+        :aria-hidden="disabled || !showPopper ? 'true' : 'false'"
       >
         <div class="el-popover__title" v-if="title" v-text="title"></div>
         <slot>{{ content }}</slot>
       </div>
     </transition>
-    <span class="el-popover__reference-wrapper" ref="wrapper" >
+    <span class="el-popover__reference-wrapper" ref="wrapper">
       <slot name="reference"></slot>
     </span>
   </span>
 </template>
 <script>
-import Popper from 'element-ui/src/utils/vue-popper';
-import { on, off } from 'element-ui/src/utils/dom';
-import { addClass, removeClass } from 'element-ui/src/utils/dom';
-import { generateId } from 'element-ui/src/utils/util';
+import Popper from 'nasinet-element-ui_fb/src/utils/vue-popper';
+import { on, off } from 'nasinet-element-ui_fb/src/utils/dom';
+import { addClass, removeClass } from 'nasinet-element-ui_fb/src/utils/dom';
+import { generateId } from 'nasinet-element-ui_fb/src/utils/util';
 
 export default {
   name: 'ElPopover',
@@ -86,7 +83,7 @@ export default {
   },
 
   mounted() {
-    let reference = this.referenceElm = this.reference || this.$refs.reference;
+    let reference = (this.referenceElm = this.reference || this.$refs.reference);
     const popper = this.popper || this.$refs.popper;
 
     if (!reference && this.$refs.wrapper.children) {
@@ -176,7 +173,8 @@ export default {
       }
     },
     handleKeydown(ev) {
-      if (ev.keyCode === 27 && this.trigger !== 'manual') { // esc
+      if (ev.keyCode === 27 && this.trigger !== 'manual') {
+        // esc
         this.doClose();
       }
     },
@@ -197,12 +195,7 @@ export default {
       if (!reference && this.$refs.wrapper.children) {
         reference = this.referenceElm = this.$refs.wrapper.children[0];
       }
-      if (!this.$el ||
-        !reference ||
-        this.$el.contains(e.target) ||
-        reference.contains(e.target) ||
-        !popper ||
-        popper.contains(e.target)) return;
+      if (!this.$el || !reference || this.$el.contains(e.target) || reference.contains(e.target) || !popper || popper.contains(e.target)) return;
       this.showPopper = false;
     },
     handleAfterEnter() {

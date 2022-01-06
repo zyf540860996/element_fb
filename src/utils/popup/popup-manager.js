@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { addClass, removeClass } from 'element-ui/src/utils/dom';
+import { addClass, removeClass } from 'nasinet-element-ui_fb/src/utils/dom';
 
 let hasModal = false;
 let hasInitZIndex = false;
@@ -183,9 +183,7 @@ if (!Vue.prototype.$isServer) {
       const topPopup = getTopPopup();
 
       if (topPopup && topPopup.closeOnPressEscape) {
-        topPopup.handleClose
-          ? topPopup.handleClose()
-          : (topPopup.handleAction ? topPopup.handleAction('cancel') : topPopup.close());
+        topPopup.handleClose ? topPopup.handleClose() : topPopup.handleAction ? topPopup.handleAction('cancel') : topPopup.close();
       }
     }
   });

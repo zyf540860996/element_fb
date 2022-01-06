@@ -1,8 +1,8 @@
 <script>
 import UploadList from './upload-list';
 import Upload from './upload';
-import ElProgress from 'element-ui/packages/progress';
-import Migrating from 'element-ui/src/mixins/migrating';
+import ElProgress from 'nasinet-element-ui_fb/packages/progress';
+import Migrating from 'nasinet-element-ui_fb/src/mixins/migrating';
 
 function noop() {}
 
@@ -140,7 +140,7 @@ export default {
       immediate: true,
       handler(fileList) {
         this.uploadFiles = fileList.map(item => {
-          item.uid = item.uid || (Date.now() + this.tempIndex++);
+          item.uid = item.uid || Date.now() + this.tempIndex++;
           item.status = item.status || 'success';
           return item;
         });
@@ -251,7 +251,8 @@ export default {
         props: {
           'default-file-list': 'default-file-list is renamed to file-list.',
           'show-upload-list': 'show-upload-list is renamed to show-file-list.',
-          'thumbnail-mode': 'thumbnail-mode has been deprecated, you can implement the same effect according to this case: http://element.eleme.io/#/zh-CN/component/upload#yong-hu-tou-xiang-shang-chuan'
+          'thumbnail-mode':
+            'thumbnail-mode has been deprecated, you can implement the same effect according to this case: http://element.eleme.io/#/zh-CN/component/upload#yong-hu-tou-xiang-shang-chuan'
         }
       };
     }
@@ -270,21 +271,14 @@ export default {
 
     if (this.showFileList) {
       uploadList = (
-        <UploadList
-          disabled={this.uploadDisabled}
-          listType={this.listType}
-          files={this.uploadFiles}
-          on-remove={this.handleRemove}
-          handlePreview={this.onPreview}>
-          {
-            (props) => {
-              if (this.$scopedSlots.file) {
-                return this.$scopedSlots.file({
-                  file: props.file
-                });
-              }
+        <UploadList disabled={this.uploadDisabled} listType={this.listType} files={this.uploadFiles} on-remove={this.handleRemove} handlePreview={this.onPreview}>
+          {props => {
+            if (this.$scopedSlots.file) {
+              return this.$scopedSlots.file({
+                file: props.file
+              });
             }
-          }
+          }}
         </UploadList>
       );
     }
@@ -323,14 +317,10 @@ export default {
 
     return (
       <div>
-        { this.listType === 'picture-card' ? uploadList : ''}
-        {
-          this.$slots.trigger
-            ? [uploadComponent, this.$slots.default]
-            : uploadComponent
-        }
+        {this.listType === 'picture-card' ? uploadList : ''}
+        {this.$slots.trigger ? [uploadComponent, this.$slots.default] : uploadComponent}
         {this.$slots.tip}
-        { this.listType !== 'picture-card' ? uploadList : ''}
+        {this.listType !== 'picture-card' ? uploadList : ''}
       </div>
     );
   }

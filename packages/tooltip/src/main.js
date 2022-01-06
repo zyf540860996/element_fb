@@ -1,7 +1,7 @@
-import Popper from 'element-ui/src/utils/vue-popper';
+import Popper from 'nasinet-element-ui_fb/src/utils/vue-popper';
 import debounce from 'throttle-debounce/debounce';
-import { addClass, removeClass, on, off } from 'element-ui/src/utils/dom';
-import { generateId } from 'element-ui/src/utils/util';
+import { addClass, removeClass, on, off } from 'nasinet-element-ui_fb/src/utils/dom';
+import { generateId } from 'nasinet-element-ui_fb/src/utils/util';
 import Vue from 'vue';
 
 export default {
@@ -78,29 +78,32 @@ export default {
   render(h) {
     if (this.popperVM) {
       this.popperVM.node = (
-        <transition
-          name={ this.transition }
-          onAfterLeave={ this.doDestroy }>
+        <transition name={this.transition} onAfterLeave={this.doDestroy}>
           <div
-            onMouseleave={ () => { this.setExpectedState(false); this.debounceClose(); } }
-            onMouseenter= { () => { this.setExpectedState(true); } }
+            onMouseleave={() => {
+              this.setExpectedState(false);
+              this.debounceClose();
+            }}
+            onMouseenter={() => {
+              this.setExpectedState(true);
+            }}
             ref="popper"
             role="tooltip"
             id={this.tooltipId}
-            aria-hidden={ (this.disabled || !this.showPopper) ? 'true' : 'false' }
+            aria-hidden={this.disabled || !this.showPopper ? 'true' : 'false'}
             v-show={!this.disabled && this.showPopper}
-            class={
-              ['el-tooltip__popper', 'is-' + this.effect, this.popperClass]
-            }>
-            { this.$slots.content || this.content }
+            class={['el-tooltip__popper', 'is-' + this.effect, this.popperClass]}
+          >
+            {this.$slots.content || this.content}
           </div>
-        </transition>);
+        </transition>
+      );
     }
 
     const firstElement = this.getFirstElement();
     if (!firstElement) return null;
 
-    const data = firstElement.data = firstElement.data || {};
+    const data = (firstElement.data = firstElement.data || {});
     data.staticClass = this.addTooltipClass(data.staticClass);
 
     return firstElement;
@@ -191,7 +194,7 @@ export default {
     },
 
     handleClosePopper() {
-      if (this.enterable && this.expectedState || this.manual) return;
+      if ((this.enterable && this.expectedState) || this.manual) return;
       clearTimeout(this.timeout);
 
       if (this.timeoutPending) {
@@ -218,7 +221,7 @@ export default {
       for (let index = 0; index < slots.length; index++) {
         if (slots[index] && slots[index].tag) {
           element = slots[index];
-        };
+        }
       }
       return element;
     }

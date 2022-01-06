@@ -1,4 +1,4 @@
-import VuePopper from 'element-ui/src/utils/vue-popper';
+import VuePopper from 'nasinet-element-ui_fb/src/utils/vue-popper';
 import { createTest } from '../util';
 
 const Popper = Object.assign({}, VuePopper, {
@@ -41,9 +41,11 @@ describe('Utils:VuePopper', () => {
 
   it('set reference by slot', () => {
     const vm = createTest(CleanPopper);
-    vm.$slots['reference'] = [{
-      elm: document.createElement('div')
-    }];
+    vm.$slots['reference'] = [
+      {
+        elm: document.createElement('div')
+      }
+    ];
     vm.createPopper();
     expect(vm.referenceElm).to.exist;
     expect(vm.popperElm).to.not.exist;

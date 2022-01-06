@@ -1,10 +1,9 @@
-import { isEqual, capitalize } from 'element-ui/src/utils/util';
-import { isDef } from 'element-ui/src/utils/shared';
+import { isEqual, capitalize } from 'nasinet-element-ui_fb/src/utils/util';
+import { isDef } from 'nasinet-element-ui_fb/src/utils/shared';
 
 let uid = 0;
 
 export default class Node {
-
   constructor(data, config, parentNode) {
     this.data = data;
     this.config = config;
@@ -42,17 +41,14 @@ export default class Node {
     const { data, parent, config } = this;
     const disabledKey = config.disabled;
     const { checkStrictly } = config;
-    return data[disabledKey] ||
-      !checkStrictly && parent && parent.isDisabled;
+    return data[disabledKey] || (!checkStrictly && parent && parent.isDisabled);
   }
 
   get isLeaf() {
     const { data, loaded, hasChildren, children } = this;
     const { lazy, leaf: leafKey } = this.config;
     if (lazy) {
-      const isLeaf = isDef(data[leafKey])
-        ? data[leafKey]
-        : (loaded ? !children.length : false);
+      const isLeaf = isDef(data[leafKey]) ? data[leafKey] : loaded ? !children.length : false;
       this.hasChildren = !isLeaf;
       return isLeaf;
     }
@@ -80,9 +76,7 @@ export default class Node {
   }
 
   getValueByOption() {
-    return this.config.emitPath
-      ? this.getPath()
-      : this.getValue();
+    return this.config.emitPath ? this.getPath() : this.getValue();
   }
 
   getText(allLevels, separator) {
@@ -91,9 +85,7 @@ export default class Node {
 
   isSameNode(checkedValue) {
     const value = this.getValueByOption();
-    return this.config.multiple && Array.isArray(checkedValue)
-      ? checkedValue.some(val => isEqual(val, value))
-      : isEqual(checkedValue, value);
+    return this.config.multiple && Array.isArray(checkedValue) ? checkedValue.some(val => isEqual(val, value)) : isEqual(checkedValue, value);
   }
 
   broadcast(event, ...args) {
@@ -126,9 +118,7 @@ export default class Node {
   onChildCheck() {
     const { children } = this;
     const validChildren = children.filter(child => !child.isDisabled);
-    const checked = validChildren.length
-      ? validChildren.every(child => child.checked)
-      : false;
+    const checked = validChildren.length ? validChildren.every(child => child.checked) : false;
 
     this.setCheckState(checked);
   }
@@ -136,7 +126,7 @@ export default class Node {
   setCheckState(checked) {
     const totalNum = this.children.length;
     const checkedNum = this.children.reduce((c, p) => {
-      const num = p.checked ? 1 : (p.indeterminate ? 0.5 : 0);
+      const num = p.checked ? 1 : p.indeterminate ? 0.5 : 0;
       return c + num;
     }, 0);
 

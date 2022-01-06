@@ -1,7 +1,7 @@
 <template>
   <div class="el-empty">
     <div class="el-empty__image" :style="imageStyle">
-      <img v-if="image" :src="image" ondragstart="return false">
+      <img v-if="image" :src="image" ondragstart="return false" />
       <slot v-else name="image">
         <img-empty />
       </slot>
@@ -18,7 +18,7 @@
 
 <script>
 import ImgEmpty from './img-empty.vue';
-import { t } from 'element-ui/src/locale';
+import { t } from 'nasinet-element-ui_fb/src/locale';
 
 export default {
   name: 'ElEmpty',

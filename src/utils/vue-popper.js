@@ -1,7 +1,5 @@
 import Vue from 'vue';
-import {
-  PopupManager
-} from 'element-ui/src/utils/popup';
+import { PopupManager } from 'nasinet-element-ui_fb/src/utils/popup';
 
 const PopperJS = Vue.prototype.$isServer ? function() {} : require('./popper');
 const stop = e => e.stopPropagation();
@@ -85,12 +83,10 @@ export default {
       }
 
       const options = this.popperOptions;
-      const popper = this.popperElm = this.popperElm || this.popper || this.$refs.popper;
-      let reference = this.referenceElm = this.referenceElm || this.reference || this.$refs.reference;
+      const popper = (this.popperElm = this.popperElm || this.popper || this.$refs.popper);
+      let reference = (this.referenceElm = this.referenceElm || this.reference || this.$refs.reference);
 
-      if (!reference &&
-        this.$slots.reference &&
-        this.$slots.reference[0]) {
+      if (!reference && this.$slots.reference && this.$slots.reference[0]) {
         reference = this.referenceElm = this.$slots.reference[0].elm;
       }
 
@@ -152,9 +148,8 @@ export default {
       };
       let placement = this.popperJS._popper.getAttribute('x-placement').split('-')[0];
       let origin = placementMap[placement];
-      this.popperJS._popper.style.transformOrigin = typeof this.transformOrigin === 'string'
-        ? this.transformOrigin
-        : ['top', 'bottom'].indexOf(placement) > -1 ? `center ${ origin }` : `${ origin } center`;
+      this.popperJS._popper.style.transformOrigin =
+        typeof this.transformOrigin === 'string' ? this.transformOrigin : ['top', 'bottom'].indexOf(placement) > -1 ? `center ${origin}` : `${origin} center`;
     },
 
     appendArrow(element) {

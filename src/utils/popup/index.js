@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import merge from 'element-ui/src/utils/merge';
-import PopupManager from 'element-ui/src/utils/popup/popup-manager';
+import merge from 'nasinet-element-ui_fb/src/utils/merge';
+import PopupManager from 'nasinet-element-ui_fb/src/utils/popup/popup-manager';
 import getScrollBarWidth from '../scrollbar-width';
 import { getStyle, addClass, removeClass, hasClass } from '../dom';
 
@@ -213,6 +213,4 @@ export default {
   }
 };
 
-export {
-  PopupManager
-};
+export { PopupManager };

@@ -15,11 +15,15 @@ const isPlay = !!process.env.PLAY_ENV;
 
 const webpackConfig = {
   mode: process.env.NODE_ENV,
-  entry: isProd ? {
-    docs: './examples/entry.js'
-  } : (isPlay ? './examples/play.js' : './examples/entry.js'),
+  entry: isProd
+    ? {
+        docs: './examples/entry.js'
+      }
+    : isPlay
+    ? './examples/play.js'
+    : './examples/entry.js',
   output: {
-    path: path.resolve(process.cwd(), './examples/element-ui/'),
+    path: path.resolve(process.cwd(), './examples/nasinet-element-ui_fb/'),
     publicPath: process.env.CI_ENV || '',
     filename: '[name].[hash:7].js',
     chunkFilename: isProd ? '[name].[hash:7].js' : '[name].js'
@@ -66,11 +70,7 @@ const webpackConfig = {
       },
       {
         test: /\.(scss|css)$/,
-        use: [
-          isProd ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: [isProd ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.md$/,
@@ -106,9 +106,7 @@ const webpackConfig = {
       filename: './index.html',
       favicon: './examples/favicon.ico'
     }),
-    new CopyWebpackPlugin([
-      { from: 'examples/versions.json' }
-    ]),
+    new CopyWebpackPlugin([{ from: 'examples/versions.json' }]),
     new ProgressBarPlugin(),
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
@@ -152,7 +150,7 @@ if (isProd) {
     cacheGroups: {
       vendor: {
         test: /\/src\//,
-        name: 'element-ui',
+        name: 'nasinet-element-ui_fb',
         chunks: 'all'
       }
     }

@@ -1,5 +1,5 @@
 import DescriptionsRow from './descriptions-row';
-import { isFunction } from 'element-ui/src/utils/types';
+import { isFunction } from 'nasinet-element-ui_fb/src/utils/types';
 
 export default {
   name: 'ElDescriptions',
@@ -112,8 +112,7 @@ export default {
       return node;
     },
     getRows() {
-      const children = ((this.$slots.default || []).filter(vnode => vnode.tag &&
-            vnode.componentOptions && vnode.componentOptions.Ctor.options.name === 'ElDescriptionsItem'));
+      const children = (this.$slots.default || []).filter(vnode => vnode.tag && vnode.componentOptions && vnode.componentOptions.Ctor.options.name === 'ElDescriptionsItem');
       const nodes = children.map(vnode => {
         return {
           props: this.getOptionProps(vnode),
@@ -154,23 +153,17 @@ export default {
 
     return (
       <div class="el-descriptions">
-        {
-          (title || extra || $slots.title || $slots.extra)
-            ? <div class="el-descriptions__header">
-              <div class="el-descriptions__title">
-                { $slots.title ? $slots.title : title}
-              </div>
-              <div class="el-descriptions__extra">
-                { $slots.extra ? $slots.extra : extra }
-              </div>
-            </div>
-            : null
-        }
+        {title || extra || $slots.title || $slots.extra ? (
+          <div class="el-descriptions__header">
+            <div class="el-descriptions__title">{$slots.title ? $slots.title : title}</div>
+            <div class="el-descriptions__extra">{$slots.extra ? $slots.extra : extra}</div>
+          </div>
+        ) : null}
 
         <div class="el-descriptions__body">
-          <table class={['el-descriptions__table', {'is-bordered': border}, descriptionsSize ? `el-descriptions--${descriptionsSize}` : '']}>
+          <table class={['el-descriptions__table', { 'is-bordered': border }, descriptionsSize ? `el-descriptions--${descriptionsSize}` : '']}>
             {rows.map(row => (
-              <DescriptionsRow row={row}></DescriptionsRow>
+              <DescriptionsRow row={row} />
             ))}
           </table>
         </div>

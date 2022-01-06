@@ -26,15 +26,16 @@ Alert interrompt l'action de l'utilisateur jusqu'à ce qu'il confirme.
           callback: action => {
             this.$message({
               type: 'info',
-              message: `action: ${ action }`
+              message: `action: ${action}`
             });
           }
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Confirm
@@ -56,20 +57,22 @@ Confirm est utilisé pour demander une confirmation à l'utilisateur.
           confirmButtonText: 'OK',
           cancelButtonText: 'Annuler',
           type: 'warning'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: 'Fichier supprimé'
+        })
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Fichier supprimé'
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: 'Suppression annulée'
+            });
           });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Suppression annulée'
-          });          
-        });
       }
     }
-  }
+  };
 </script>
 ```
 
@@ -95,22 +98,25 @@ Prompt est utilisé lorsqu'un utilisateur.
           cancelButtonText: 'Annuler',
           inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
           inputErrorMessage: 'E-mail invalide'
-        }).then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: 'Votre e-mail est: ' + value
+        })
+          .then(({ value }) => {
+            this.$message({
+              type: 'success',
+              message: 'Votre e-mail est: ' + value
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: 'Annulé'
+            });
           });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Annulé'
-          });
-        });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Personnalisation
@@ -131,10 +137,7 @@ Il est possible d'afficher du contenu un peu plus varié et personnalisé.
         const h = this.$createElement;
         this.$msgbox({
           title: 'Message',
-          message: h('p', null, [
-            h('span', null, 'Le message peut être '),
-            h('i', { style: 'color: teal' }, 'VNode')
-          ]),
+          message: h('p', null, [h('span', null, 'Le message peut être '), h('i', { style: 'color: teal' }, 'VNode')]),
           showCancelButton: true,
           confirmButtonText: 'OK',
           cancelButtonText: 'Annuler',
@@ -158,11 +161,12 @@ Il est possible d'afficher du contenu un peu plus varié et personnalisé.
             message: 'Action: ' + action
           });
         });
-      },
+      }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 :::tip
@@ -189,9 +193,10 @@ Le contenu de MessageBox peut être `VNode`, Vous permettant de passer des compo
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 :::warning
@@ -227,16 +232,15 @@ Dans certains cas, les boutons fermer et annuler peuvent avoir des sens différe
           .catch(action => {
             this.$message({
               type: 'info',
-              message: action === 'cancel'
-                ? 'Changements annulés. Passage sur une nouvelle route.'
-                : 'Reste sur la même route'
-            })
+              message: action === 'cancel' ? 'Changements annulés. Passage sur une nouvelle route.' : 'Reste sur la même route'
+            });
           });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Contenu centré
@@ -254,32 +258,36 @@ le contenu de MessageBox peut être centré.
   export default {
     methods: {
       open() {
-        this.$confirm('Ceci effacera le fichier, continuer?' , 'Warning', {
+        this.$confirm('Ceci effacera le fichier, continuer?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Annuler',
           type: 'warning',
           center: true
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: 'Fichier supprimé'
+        })
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Fichier supprimé'
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: 'Annulé'
+            });
           });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Annulé'
-          });
-        });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Méthode globale
 
 Si Element est importé entièrement, il ajoutera les méthodes suivantes à Vue.prototype: `$msgbox`, `$alert`, `$confirm` et `$prompt`. Dans ce cas vous pouvez appeler `MessageBox` comme nous l'avons fait dans cette page. Les paramètres sont:
+
 - `$msgbox(options)`
 - `$alert(message, title, options)` ou `$alert(message, options)`
 - `$confirm(message, title, options)` ou `$confirm(message, options)`
@@ -290,41 +298,41 @@ Si Element est importé entièrement, il ajoutera les méthodes suivantes à Vue
 Si vous préférer importer `MessageBox` à la demande:
 
 ```javascript
-import { MessageBox } from 'element-ui';
+import { MessageBox } from 'nasinet-element-ui_fb';
 ```
 
 Les méthodes correspondantes sont: `MessageBox`, `MessageBox.alert`, `MessageBox.confirm` et `MessageBox.prompt`. Les paramètres sont les mêmes que précédemment.
 
 ### Options
 
-| Attribut      | Description          | Type      | Valeurs acceptées       | Défaut  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| title | Titre de la MessageBox. | string | — | — |
-| message | Contenu de la MessageBox. | string | — | — |
-| dangerouslyUseHTMLString | Si `message` doit être traité comme du HTML. | boolean | — | false |
-| type | Type du message, utilisé pour le choix d'icône. | string | success / info / warning / error | — |
-| iconClass | Classe d'icône personnalisée, écrase `type`. | string | — | — |
-| customClass | Nom de classe pour MessageBox. | string | — | — |
-| callback | La callback de fermeture de MessageBox si vous n'utilisez pas les promesses. | function(action, instance), ou `action` peut être 'confirm', 'cancel' ou 'close', et `instance` est l'instance MessageBox. | — | — |
-| showClose | Si l'icône de fermeture doit être affichée. | boolean | — | true |
-| beforeClose | La callback de pré-fermeture qui empèchera MessageBox de se fermer. | function(action, instance, done), ou `action` peut-être 'confirm', 'cancel' ou 'close'; `instance` est l'instance de MessageBox; `done` est la méthode pour fermer l'instance. | — | — |
-| distinguishCancelAndClose | S'il doit y avoir une différence entre l'annulation et la fermeture de la MessageBox. | boolean | — | false |
-| lockScroll | Si le défilement de la page doit être bloqué lorsque la MessageBox est active. | boolean | — | true |
-| showCancelButton | Si le bouton annuler doit être affiché. | boolean | — | false (true dans le cas de confirm ou prompt). |
-| showConfirmButton | Si le bouton confirmer doit être affiché. | boolean | — | true |
-| cancelButtonText | Le texte du bouton annuler. | string | — | Cancel |
-| confirmButtonText | Le texte du bouton confirmer. | string | — | OK |
-| cancelButtonClass | Classe du bouton annuler. | string | — | — |
-| confirmButtonClass | Classe du bouton confirmer. | string | — | — |
-| closeOnClickModal | Si MessageBox peut être fermée en cliquant en dehors. | boolean | — | true (false dans le cas de alert). |
-| closeOnPressEscape | Si MessageBox peut être fermée en pressant ESC. | boolean | — | true (false dans le cas de alert) |
-| closeOnHashChange | Si MessageBox doit être fermée quand le hash change. | boolean | — | true |
-| showInput | Si un champs d'input doit être affiché. | boolean | — | false (true dans le cas de prompt). |
-| inputPlaceholder | Placeholder du champs d'input. | string | — | — |
-| inputType | Type du champs d'input. | string | — | text |
-| inputValue | Valeur initiale du champs d'input. | string | — | — |
-| inputPattern | RegExp du champs d'input. | regexp | — | — |
-| inputValidator | Fonction de validation du champs d'input. Doit retourner un boolean ou un string. Si c'est un string, il sera assigné à inputErrorMessage. | function | — | — |
-| inputErrorMessage | Message d'erreur lorsque la validation échoue. | string | — | Illegal input |
-| center | Si le contenu doit être centré. | boolean | — | false |
-| roundButton | Si le bouton doit être rond. | boolean | — | false |
+| Attribut                  | Description                                                                                                                                | Type                                                                                                                                                                           | Valeurs acceptées                | Défaut                                         |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | ---------------------------------------------- |
+| title                     | Titre de la MessageBox.                                                                                                                    | string                                                                                                                                                                         | —                                | —                                              |
+| message                   | Contenu de la MessageBox.                                                                                                                  | string                                                                                                                                                                         | —                                | —                                              |
+| dangerouslyUseHTMLString  | Si `message` doit être traité comme du HTML.                                                                                               | boolean                                                                                                                                                                        | —                                | false                                          |
+| type                      | Type du message, utilisé pour le choix d'icône.                                                                                            | string                                                                                                                                                                         | success / info / warning / error | —                                              |
+| iconClass                 | Classe d'icône personnalisée, écrase `type`.                                                                                               | string                                                                                                                                                                         | —                                | —                                              |
+| customClass               | Nom de classe pour MessageBox.                                                                                                             | string                                                                                                                                                                         | —                                | —                                              |
+| callback                  | La callback de fermeture de MessageBox si vous n'utilisez pas les promesses.                                                               | function(action, instance), ou `action` peut être 'confirm', 'cancel' ou 'close', et `instance` est l'instance MessageBox.                                                     | —                                | —                                              |
+| showClose                 | Si l'icône de fermeture doit être affichée.                                                                                                | boolean                                                                                                                                                                        | —                                | true                                           |
+| beforeClose               | La callback de pré-fermeture qui empèchera MessageBox de se fermer.                                                                        | function(action, instance, done), ou `action` peut-être 'confirm', 'cancel' ou 'close'; `instance` est l'instance de MessageBox; `done` est la méthode pour fermer l'instance. | —                                | —                                              |
+| distinguishCancelAndClose | S'il doit y avoir une différence entre l'annulation et la fermeture de la MessageBox.                                                      | boolean                                                                                                                                                                        | —                                | false                                          |
+| lockScroll                | Si le défilement de la page doit être bloqué lorsque la MessageBox est active.                                                             | boolean                                                                                                                                                                        | —                                | true                                           |
+| showCancelButton          | Si le bouton annuler doit être affiché.                                                                                                    | boolean                                                                                                                                                                        | —                                | false (true dans le cas de confirm ou prompt). |
+| showConfirmButton         | Si le bouton confirmer doit être affiché.                                                                                                  | boolean                                                                                                                                                                        | —                                | true                                           |
+| cancelButtonText          | Le texte du bouton annuler.                                                                                                                | string                                                                                                                                                                         | —                                | Cancel                                         |
+| confirmButtonText         | Le texte du bouton confirmer.                                                                                                              | string                                                                                                                                                                         | —                                | OK                                             |
+| cancelButtonClass         | Classe du bouton annuler.                                                                                                                  | string                                                                                                                                                                         | —                                | —                                              |
+| confirmButtonClass        | Classe du bouton confirmer.                                                                                                                | string                                                                                                                                                                         | —                                | —                                              |
+| closeOnClickModal         | Si MessageBox peut être fermée en cliquant en dehors.                                                                                      | boolean                                                                                                                                                                        | —                                | true (false dans le cas de alert).             |
+| closeOnPressEscape        | Si MessageBox peut être fermée en pressant ESC.                                                                                            | boolean                                                                                                                                                                        | —                                | true (false dans le cas de alert)              |
+| closeOnHashChange         | Si MessageBox doit être fermée quand le hash change.                                                                                       | boolean                                                                                                                                                                        | —                                | true                                           |
+| showInput                 | Si un champs d'input doit être affiché.                                                                                                    | boolean                                                                                                                                                                        | —                                | false (true dans le cas de prompt).            |
+| inputPlaceholder          | Placeholder du champs d'input.                                                                                                             | string                                                                                                                                                                         | —                                | —                                              |
+| inputType                 | Type du champs d'input.                                                                                                                    | string                                                                                                                                                                         | —                                | text                                           |
+| inputValue                | Valeur initiale du champs d'input.                                                                                                         | string                                                                                                                                                                         | —                                | —                                              |
+| inputPattern              | RegExp du champs d'input.                                                                                                                  | regexp                                                                                                                                                                         | —                                | —                                              |
+| inputValidator            | Fonction de validation du champs d'input. Doit retourner un boolean ou un string. Si c'est un string, il sera assigné à inputErrorMessage. | function                                                                                                                                                                       | —                                | —                                              |
+| inputErrorMessage         | Message d'erreur lorsque la validation échoue.                                                                                             | string                                                                                                                                                                         | —                                | Illegal input                                  |
+| center                    | Si le contenu doit être centré.                                                                                                            | boolean                                                                                                                                                                        | —                                | false                                          |
+| roundButton               | Si le bouton doit être rond.                                                                                                               | boolean                                                                                                                                                                        | —                                | false                                          |

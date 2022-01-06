@@ -4,20 +4,16 @@ Muestra un mensaje de notificación global en una esquina de la página.
 
 ### Uso básico
 
-:::demo Element ha registrado el método`$notify` y recibe un objeto como parámetro. En el caso más sencillo, puede establecer el campo de `title` y el campo de ` message` para el título y el cuerpo de la notificación. De forma predeterminada, la notificación se cierra automáticamente después de 4500ms, pero configurando `duration`  se puede controlar su duración. Específicamente, si está configurado en `0`, no se cerrará automáticamente. Tenga en cuenta que `duration` recibe un `Number` en mili segundos.
+:::demo Element ha registrado el método`$notify` y recibe un objeto como parámetro. En el caso más sencillo, puede establecer el campo de `title` y el campo de `message` para el título y el cuerpo de la notificación. De forma predeterminada, la notificación se cierra automáticamente después de 4500ms, pero configurando `duration` se puede controlar su duración. Específicamente, si está configurado en `0`, no se cerrará automáticamente. Tenga en cuenta que `duration` recibe un `Number` en mili segundos.
 
 ```html
 <template>
-  <el-button
-    plain
-    @click="open1">
+  <el-button plain @click="open1">
     Closes automatically
   </el-button>
-  <el-button
-    plain
-    @click="open2">
+  <el-button plain @click="open2">
     Won't close automatically
-    </el-button>
+  </el-button>
 </template>
 
 <script>
@@ -40,37 +36,30 @@ Muestra un mensaje de notificación global en una esquina de la página.
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Tipos de notificaciones
 
 Proporcionamos cuatro tipos: success, warning, info y error.
 
-:::demo Element proporciona cuatro tipos de notificación: `success`, `warning`, `info` y `error`. Se definen por el campo `type`  y se ignorarán otros valores. También se han registrado métodos para estos tipos que se pueden invocar directamente como en el ejemplo `open3` y `open4` sin pasar un campo `type`.
+:::demo Element proporciona cuatro tipos de notificación: `success`, `warning`, `info` y `error`. Se definen por el campo `type` y se ignorarán otros valores. También se han registrado métodos para estos tipos que se pueden invocar directamente como en el ejemplo `open3` y `open4` sin pasar un campo `type`.
 
 ```html
 <template>
-  <el-button
-    plain
-    @click="open1">
+  <el-button plain @click="open1">
     Success
   </el-button>
-  <el-button
-    plain
-    @click="open2">
+  <el-button plain @click="open2">
     Warning
   </el-button>
-  <el-button
-    plain
-    @click="open3">
+  <el-button plain @click="open3">
     Info
   </el-button>
-  <el-button
-    plain
-    @click="open4">
+  <el-button plain @click="open4">
     Error
   </el-button>
 </template>
@@ -108,9 +97,10 @@ Proporcionamos cuatro tipos: success, warning, info y error.
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Posición personalizada
@@ -121,24 +111,16 @@ La notificación puede surgir de cualquier rincón que uno desee.
 
 ```html
 <template>
-  <el-button
-    plain
-    @click="open1">
+  <el-button plain @click="open1">
     Top Right
   </el-button>
-  <el-button
-    plain
-    @click="open2">
+  <el-button plain @click="open2">
     Bottom Right
   </el-button>
-  <el-button
-    plain
-    @click="open3">
+  <el-button plain @click="open3">
     Bottom Left
   </el-button>
-  <el-button
-    plain
-    @click="open4">
+  <el-button plain @click="open4">
     Top Left
   </el-button>
 </template>
@@ -149,14 +131,14 @@ La notificación puede surgir de cualquier rincón que uno desee.
       open1() {
         this.$notify({
           title: 'Custom Position',
-          message: 'I\'m at the top right corner'
+          message: "I'm at the top right corner"
         });
       },
 
       open2() {
         this.$notify({
           title: 'Custom Position',
-          message: 'I\'m at the bottom right corner',
+          message: "I'm at the bottom right corner",
           position: 'bottom-right'
         });
       },
@@ -164,7 +146,7 @@ La notificación puede surgir de cualquier rincón que uno desee.
       open3() {
         this.$notify({
           title: 'Custom Position',
-          message: 'I\'m at the bottom left corner',
+          message: "I'm at the bottom left corner",
           position: 'bottom-left'
         });
       },
@@ -172,14 +154,15 @@ La notificación puede surgir de cualquier rincón que uno desee.
       open4() {
         this.$notify({
           title: 'Custom Position',
-          message: 'I\'m at the top left corner',
+          message: "I'm at the top left corner",
           position: 'top-left'
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Desplazamiento
@@ -190,9 +173,7 @@ Personalizar el desplazamiento de notificación desde el borde de la pantalla.
 
 ```html
 <template>
-  <el-button
-    plain
-    @click="open">
+  <el-button plain @click="open">
     Notification with offset
   </el-button>
 </template>
@@ -208,21 +189,21 @@ Personalizar el desplazamiento de notificación desde el borde de la pantalla.
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Usando cadenas HTML
+
 `message` soporta cadenas HTML.
 
 :::demo Configure `dangerouslyUseHTMLString` a true y `message` se tratará como una cadena HTML.
 
 ```html
 <template>
-  <el-button
-    plain
-    @click="open">
+  <el-button plain @click="open">
     Use HTML String
   </el-button>
 </template>
@@ -238,9 +219,10 @@ Personalizar el desplazamiento de notificación desde el borde de la pantalla.
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 :::warning
@@ -257,11 +239,9 @@ Es posible ocultar el botón de cerrar
 
 ```html
 <template>
-  <el-button
-    plain
-    @click="open">
+  <el-button plain @click="open">
     Hide close button
-    </el-button>
+  </el-button>
 </template>
 
 <script>
@@ -275,9 +255,10 @@ Es posible ocultar el botón de cerrar
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Método global
@@ -289,28 +270,30 @@ Element ha añadido un método global `$notify` para Vue.prototype. Así que en 
 Importar `Notification`:
 
 ```javascript
-import { Notification } from 'element-ui';
+import { Notification } from 'nasinet-element-ui_fb';
 ```
 
 En este caso, debe llamar a `Notification(options)`. También se han registrado métodos para diferentes tipos, e.j. `Notification.success(options)`. Puede llamar al método `Notification.closeAll()` para cerrar manualmente todas las instancias.
 
 ### Opciones
-| Atributo                 | Descripción                                                  | Tipo             | Valores aceptados                           | Por defecto |
-| ------------------------ | ------------------------------------------------------------ | ---------------- | ------------------------------------------- | ----------- |
-| title                    | titulo                                                       | string           | —                                           | —           |
-| message                  | mensaje                                                      | string/Vue.VNode | —                                           | —           |
-| dangerouslyUseHTMLString | si  `message` es tratado como una cadena HTML                | boolean          | —                                           | false       |
-| type                     | tipo de notificación                                         | string           | success/warning/info/error                  | —           |
-| iconClass                | clase personalizada de icono. Será anulado por `type`        | string           | —                                           | —           |
-| customClass              | nombre de clase personalizado para la notificación           | string           | —                                           | —           |
-| duration                 | duración antes de cerrar. Si no se quiere que se cierre automáticamente este valor debe estar a 0 | number           | —                                           | 4500        |
-| position                 | posición personalizada                                       | string           | top-right/top-left/bottom-right/bottom-left | top-right   |
-| showClose                | si se muestra el botón de cerrar                             | boolean          | —                                           | true        |
-| onClose                  | función que se ejecuta cuando la notificación se cierra      | function         | —                                           | —           |
-| onClick                  | función que se ejecuta cuando se hace clic en la notificación | function         | —                                           | —           |
+
+| Atributo                 | Descripción                                                                                                                                         | Tipo             | Valores aceptados                           | Por defecto |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------------------------------------- | ----------- |
+| title                    | titulo                                                                                                                                              | string           | —                                           | —           |
+| message                  | mensaje                                                                                                                                             | string/Vue.VNode | —                                           | —           |
+| dangerouslyUseHTMLString | si `message` es tratado como una cadena HTML                                                                                                        | boolean          | —                                           | false       |
+| type                     | tipo de notificación                                                                                                                                | string           | success/warning/info/error                  | —           |
+| iconClass                | clase personalizada de icono. Será anulado por `type`                                                                                               | string           | —                                           | —           |
+| customClass              | nombre de clase personalizado para la notificación                                                                                                  | string           | —                                           | —           |
+| duration                 | duración antes de cerrar. Si no se quiere que se cierre automáticamente este valor debe estar a 0                                                   | number           | —                                           | 4500        |
+| position                 | posición personalizada                                                                                                                              | string           | top-right/top-left/bottom-right/bottom-left | top-right   |
+| showClose                | si se muestra el botón de cerrar                                                                                                                    | boolean          | —                                           | true        |
+| onClose                  | función que se ejecuta cuando la notificación se cierra                                                                                             | function         | —                                           | —           |
+| onClick                  | función que se ejecuta cuando se hace clic en la notificación                                                                                       | function         | —                                           | —           |
 | offset                   | desplazamiento desde el borde superior de la pantalla. Cada instancia de notificación del mismo momento debe tener siempre el mismo desplazamiento. | number           | —                                           | 0           |
 
 ### Métodos
+
 `Notification` y `this.$notify` devuelven la instancia de la notificación actual. Para cerrar manualmente la instancia, se puede llamar `close` para ello.
 
 | Método | Descripción            |

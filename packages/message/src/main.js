@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Main from './main.vue';
-import { PopupManager } from 'element-ui/src/utils/popup';
-import { isVNode } from 'element-ui/src/utils/vdom';
-import { isObject } from 'element-ui/src/utils/types';
+import { PopupManager } from 'nasinet-element-ui_fb/src/utils/popup';
+import { isVNode } from 'nasinet-element-ui_fb/src/utils/vdom';
+import { isObject } from 'nasinet-element-ui_fb/src/utils/types';
 let MessageConstructor = Vue.extend(Main);
 
 let instance;
@@ -45,7 +45,7 @@ const Message = function(options) {
 };
 
 ['success', 'warning', 'info', 'error'].forEach(type => {
-  Message[type] = (options) => {
+  Message[type] = options => {
     if (isObject(options) && !isVNode(options)) {
       return Message({
         ...options,
@@ -75,10 +75,9 @@ Message.close = function(id, userOnClose) {
     }
   }
   if (len <= 1 || index === -1 || index > instances.length - 1) return;
-  for (let i = index; i < len - 1 ; i++) {
+  for (let i = index; i < len - 1; i++) {
     let dom = instances[i].$el;
-    dom.style['top'] =
-      parseInt(dom.style['top'], 10) - removedHeight - 16 + 'px';
+    dom.style['top'] = parseInt(dom.style['top'], 10) - removedHeight - 16 + 'px';
   }
 };
 

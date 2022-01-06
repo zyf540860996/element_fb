@@ -13,39 +13,27 @@
     @focus="handleFocus"
     @keydown.native="handleKeydown"
     :value="displayValue"
-    @input="value => userInput = value"
+    @input="value => (userInput = value)"
     @change="handleChange"
     @mouseenter.native="handleMouseEnter"
     @mouseleave.native="showClose = false"
     :validateEvent="false"
-    ref="reference">
-    <i slot="prefix"
-      class="el-input__icon"
-      :class="triggerClass"
-      @click="handleFocus">
-    </i>
-    <i slot="suffix"
-      class="el-input__icon"
-      @click="handleClickIcon"
-      :class="[showClose ? '' + clearIcon : '']"
-      v-if="haveTrigger">
-    </i>
+    ref="reference"
+  >
+    <i slot="prefix" class="el-input__icon" :class="triggerClass" @click="handleFocus"> </i>
+    <i slot="suffix" class="el-input__icon" @click="handleClickIcon" :class="[showClose ? '' + clearIcon : '']" v-if="haveTrigger"> </i>
   </el-input>
   <div
     class="el-date-editor el-range-editor el-input__inner"
-    :class="[
-      'el-date-editor--' + type,
-      pickerSize ? `el-range-editor--${ pickerSize }` : '',
-      pickerDisabled ? 'is-disabled' : '',
-      pickerVisible ? 'is-active' : ''
-    ]"
+    :class="['el-date-editor--' + type, pickerSize ? `el-range-editor--${pickerSize}` : '', pickerDisabled ? 'is-disabled' : '', pickerVisible ? 'is-active' : '']"
     @click="handleRangeClick"
     @mouseenter="handleMouseEnter"
     @mouseleave="showClose = false"
     @keydown="handleKeydown"
     ref="reference"
     v-clickoutside="handleClose"
-    v-else>
+    v-else
+  >
     <i :class="['el-input__icon', 'el-range__icon', triggerClass]"></i>
     <input
       autocomplete="off"
@@ -58,7 +46,8 @@
       @input="handleStartInput"
       @change="handleStartChange"
       @focus="handleFocus"
-      class="el-range-input">
+      class="el-range-input"
+    />
     <slot name="range-separator">
       <span class="el-range-separator">{{ rangeSeparator }}</span>
     </slot>
@@ -73,24 +62,20 @@
       @input="handleEndInput"
       @change="handleEndChange"
       @focus="handleFocus"
-      class="el-range-input">
-    <i
-      @click="handleClickIcon"
-      v-if="haveTrigger"
-      :class="[showClose ? '' + clearIcon : '']"
-      class="el-input__icon el-range__close-icon">
-    </i>
+      class="el-range-input"
+    />
+    <i @click="handleClickIcon" v-if="haveTrigger" :class="[showClose ? '' + clearIcon : '']" class="el-input__icon el-range__close-icon"> </i>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
-import { formatDate, parseDate, isDateObject, getWeekNumber } from 'element-ui/src/utils/date-util';
-import Popper from 'element-ui/src/utils/vue-popper';
-import Emitter from 'element-ui/src/mixins/emitter';
-import ElInput from 'element-ui/packages/input';
-import merge from 'element-ui/src/utils/merge';
+import Clickoutside from 'nasinet-element-ui_fb/src/utils/clickoutside';
+import { formatDate, parseDate, isDateObject, getWeekNumber } from 'nasinet-element-ui_fb/src/utils/date-util';
+import Popper from 'nasinet-element-ui_fb/src/utils/vue-popper';
+import Emitter from 'nasinet-element-ui_fb/src/mixins/emitter';
+import ElInput from 'nasinet-element-ui_fb/packages/input';
+import merge from 'nasinet-element-ui_fb/src/utils/merge';
 
 const NewPopper = {
   props: {
@@ -118,20 +103,7 @@ const DEFAULT_FORMATS = {
   datetimerange: 'yyyy-MM-dd HH:mm:ss',
   year: 'yyyy'
 };
-const HAVE_TRIGGER_TYPES = [
-  'date',
-  'datetime',
-  'time',
-  'time-select',
-  'week',
-  'month',
-  'year',
-  'daterange',
-  'monthrange',
-  'timerange',
-  'datetimerange',
-  'dates'
-];
+const HAVE_TRIGGER_TYPES = ['date', 'datetime', 'time', 'time-select', 'week', 'month', 'year', 'daterange', 'monthrange', 'timerange', 'datetimerange', 'dates'];
 const DATE_FORMATTER = function(value, format) {
   if (format === 'timestamp') return value.getTime();
   return formatDate(value, format);
@@ -181,13 +153,11 @@ const TYPE_VALUE_RESOLVER_MAP = {
       const trueDate = new Date(value);
       if (week === 1 && month === 11) {
         trueDate.setHours(0, 0, 0, 0);
-        trueDate.setDate(trueDate.getDate() + 3 - (trueDate.getDay() + 6) % 7);
+        trueDate.setDate(trueDate.getDate() + 3 - ((trueDate.getDay() + 6) % 7));
       }
       let date = formatDate(trueDate, format);
 
-      date = /WW/.test(date)
-        ? date.replace(/WW/, week < 10 ? '0' + week : week)
-        : date.replace(/W/, week);
+      date = /WW/.test(date) ? date.replace(/WW/, week < 10 ? '0' + week : week) : date.replace(/W/, week);
       return date;
     },
     parser(text, format) {
@@ -251,8 +221,7 @@ const TYPE_VALUE_RESOLVER_MAP = {
       return value.map(date => DATE_FORMATTER(date, format));
     },
     parser(value, format) {
-      return (typeof value === 'string' ? value.split(', ') : value)
-        .map(date => date instanceof Date ? date : DATE_PARSER(date, format));
+      return (typeof value === 'string' ? value.split(', ') : value).map(date => (date instanceof Date ? date : DATE_PARSER(date, format)));
     }
   }
 };
@@ -264,20 +233,14 @@ const PLACEMENT_MAP = {
 
 const parseAsFormatAndType = (value, customFormat, type, rangeSeparator = '-') => {
   if (!value) return null;
-  const parser = (
-    TYPE_VALUE_RESOLVER_MAP[type] ||
-    TYPE_VALUE_RESOLVER_MAP['default']
-  ).parser;
+  const parser = (TYPE_VALUE_RESOLVER_MAP[type] || TYPE_VALUE_RESOLVER_MAP['default']).parser;
   const format = customFormat || DEFAULT_FORMATS[type];
   return parser(value, format, rangeSeparator);
 };
 
 const formatAsFormatAndType = (value, customFormat, type) => {
   if (!value) return null;
-  const formatter = (
-    TYPE_VALUE_RESOLVER_MAP[type] ||
-    TYPE_VALUE_RESOLVER_MAP['default']
-  ).formatter;
+  const formatter = (TYPE_VALUE_RESOLVER_MAP[type] || TYPE_VALUE_RESOLVER_MAP['default']).formatter;
   const format = customFormat || DEFAULT_FORMATS[type];
   return formatter(value, format);
 };
@@ -322,12 +285,7 @@ const isString = function(val) {
 
 const validator = function(val) {
   // either: String, Array of String, null / undefined
-  return (
-    val === null ||
-    val === undefined ||
-    isString(val) ||
-    (Array.isArray(val) && val.length === 2 && val.every(isString))
-  );
+  return val === null || val === undefined || isString(val) || (Array.isArray(val) && val.length === 2 && val.every(isString));
 };
 
 export default {
@@ -504,16 +462,11 @@ export default {
     displayValue() {
       const formattedValue = formatAsFormatAndType(this.parsedValue, this.format, this.type, this.rangeSeparator);
       if (Array.isArray(this.userInput)) {
-        return [
-          this.userInput[0] || (formattedValue && formattedValue[0]) || '',
-          this.userInput[1] || (formattedValue && formattedValue[1]) || ''
-        ];
+        return [this.userInput[0] || (formattedValue && formattedValue[0]) || '', this.userInput[1] || (formattedValue && formattedValue[1]) || ''];
       } else if (this.userInput !== null) {
         return this.userInput;
       } else if (formattedValue) {
-        return this.type === 'dates'
-          ? formattedValue.join(', ')
-          : formattedValue;
+        return this.type === 'dates' ? formattedValue.join(', ') : formattedValue;
       } else {
         return '';
       }
@@ -831,7 +784,7 @@ export default {
       this.picker.selectionMode = this.selectionMode;
       this.picker.unlinkPanels = this.unlinkPanels;
       this.picker.arrowControl = this.arrowControl || this.timeArrowControl || false;
-      this.$watch('format', (format) => {
+      this.$watch('format', format => {
         this.picker.format = format;
       });
 
@@ -848,9 +801,11 @@ export default {
         }
 
         for (const option in options) {
-          if (options.hasOwnProperty(option) &&
-              // 忽略 time-picker 的该配置项
-              option !== 'selectableRange') {
+          if (
+            options.hasOwnProperty(option) &&
+            // 忽略 time-picker 的该配置项
+            option !== 'selectableRange'
+          ) {
             this.picker[option] = options[option];
           }
         }

@@ -112,8 +112,8 @@ fileSave(sassPath)
   .write(sassImportText, 'utf8')
   .end('\n');
 
-// 添加到 element-ui.d.ts
-const elementTsPath = path.join(__dirname, '../../types/element-ui.d.ts');
+// 添加到 nasinet-element-ui_fb.d.ts
+const elementTsPath = path.join(__dirname, '../../types/nasinet-element-ui_fb.d.ts');
 
 let elementTsText = `${fs.readFileSync(elementTsPath)}
 /** ${ComponentName} Component */
@@ -142,9 +142,7 @@ Object.keys(navConfigFile).forEach(lang => {
   let groups = navConfigFile[lang][4].groups;
   groups[groups.length - 1].list.push({
     path: `/${componentname}`,
-    title: lang === 'zh-CN' && componentname !== chineseName
-      ? `${ComponentName} ${chineseName}`
-      : ComponentName
+    title: lang === 'zh-CN' && componentname !== chineseName ? `${ComponentName} ${chineseName}` : ComponentName
   });
 });
 

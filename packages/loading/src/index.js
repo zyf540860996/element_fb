@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import loadingVue from './loading.vue';
-import { addClass, removeClass, getStyle } from 'element-ui/src/utils/dom';
-import { PopupManager } from 'element-ui/src/utils/popup';
-import afterLeave from 'element-ui/src/utils/after-leave';
-import merge from 'element-ui/src/utils/merge';
+import { addClass, removeClass, getStyle } from 'nasinet-element-ui_fb/src/utils/dom';
+import { PopupManager } from 'nasinet-element-ui_fb/src/utils/popup';
+import afterLeave from 'nasinet-element-ui_fb/src/utils/after-leave';
+import merge from 'nasinet-element-ui_fb/src/utils/merge';
 
 const LoadingConstructor = Vue.extend(loadingVue);
 
@@ -24,17 +24,19 @@ LoadingConstructor.prototype.close = function() {
   if (this.fullscreen) {
     fullscreenLoading = undefined;
   }
-  afterLeave(this, _ => {
-    const target = this.fullscreen || this.body
-      ? document.body
-      : this.target;
-    removeClass(target, 'el-loading-parent--relative');
-    removeClass(target, 'el-loading-parent--hidden');
-    if (this.$el && this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
-    }
-    this.$destroy();
-  }, 300);
+  afterLeave(
+    this,
+    _ => {
+      const target = this.fullscreen || this.body ? document.body : this.target;
+      removeClass(target, 'el-loading-parent--relative');
+      removeClass(target, 'el-loading-parent--hidden');
+      if (this.$el && this.$el.parentNode) {
+        this.$el.parentNode.removeChild(this.$el);
+      }
+      this.$destroy();
+    },
+    300
+  );
   this.visible = false;
 };
 
@@ -48,10 +50,7 @@ const addStyle = (options, parent, instance) => {
     instance.originalPosition = getStyle(document.body, 'position');
     ['top', 'left'].forEach(property => {
       let scroll = property === 'top' ? 'scrollTop' : 'scrollLeft';
-      maskStyle[property] = options.target.getBoundingClientRect()[property] +
-        document.body[scroll] +
-        document.documentElement[scroll] +
-        'px';
+      maskStyle[property] = options.target.getBoundingClientRect()[property] + document.body[scroll] + document.documentElement[scroll] + 'px';
     });
     ['height', 'width'].forEach(property => {
       maskStyle[property] = options.target.getBoundingClientRect()[property] + 'px';

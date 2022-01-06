@@ -1,3 +1,4 @@
+/* eslint-disable */
 const defaults = {
   title: null,
   message: '',
@@ -35,8 +36,8 @@ const defaults = {
 
 import Vue from 'vue';
 import msgboxVue from './main.vue';
-import merge from 'element-ui/src/utils/merge';
-import { isVNode } from 'element-ui/src/utils/vdom';
+import merge from 'nasinet-element-ui_fb/src/utils/merge';
+import { isVNode } from 'nasinet-element-ui_fb/src/utils/vdom';
 
 const MessageBoxConstructor = Vue.extend(msgboxVue);
 
@@ -60,7 +61,10 @@ const defaultCallback = action => {
         } else {
           currentMsg.resolve(action);
         }
-      } else if (currentMsg.reject && (action === 'cancel' || action === 'close')) {
+      } else if (
+        currentMsg.reject &&
+        (action === 'cancel' || action === 'close')
+      ) {
         currentMsg.reject(action);
       }
     }
@@ -106,7 +110,13 @@ const showNextMsg = () => {
       } else {
         delete instance.$slots.default;
       }
-      ['modal', 'showClose', 'closeOnClickModal', 'closeOnPressEscape', 'closeOnHashChange'].forEach(prop => {
+      [
+        'modal',
+        'showClose',
+        'closeOnClickModal',
+        'closeOnPressEscape',
+        'closeOnHashChange'
+      ].forEach(prop => {
         if (instance[prop] === undefined) {
           instance[prop] = true;
         }
@@ -134,7 +144,8 @@ const MessageBox = function(options, callback) {
   }
 
   if (typeof Promise !== 'undefined') {
-    return new Promise((resolve, reject) => { // eslint-disable-line
+    return new Promise((resolve, reject) => {
+      // eslint-disable-line
       msgQueue.push({
         options: merge({}, defaults, MessageBox.defaults, options),
         callback: callback,
@@ -165,13 +176,18 @@ MessageBox.alert = (message, title, options) => {
   } else if (title === undefined) {
     title = '';
   }
-  return MessageBox(merge({
-    title: title,
-    message: message,
-    $type: 'alert',
-    closeOnPressEscape: false,
-    closeOnClickModal: false
-  }, options));
+  return MessageBox(
+    merge(
+      {
+        title: title,
+        message: message,
+        $type: 'alert',
+        closeOnPressEscape: false,
+        closeOnClickModal: false
+      },
+      options
+    )
+  );
 };
 
 MessageBox.confirm = (message, title, options) => {
@@ -181,12 +197,17 @@ MessageBox.confirm = (message, title, options) => {
   } else if (title === undefined) {
     title = '';
   }
-  return MessageBox(merge({
-    title: title,
-    message: message,
-    $type: 'confirm',
-    showCancelButton: true
-  }, options));
+  return MessageBox(
+    merge(
+      {
+        title: title,
+        message: message,
+        $type: 'confirm',
+        showCancelButton: true
+      },
+      options
+    )
+  );
 };
 
 MessageBox.prompt = (message, title, options) => {
@@ -196,13 +217,18 @@ MessageBox.prompt = (message, title, options) => {
   } else if (title === undefined) {
     title = '';
   }
-  return MessageBox(merge({
-    title: title,
-    message: message,
-    showCancelButton: true,
-    showInput: true,
-    $type: 'prompt'
-  }, options));
+  return MessageBox(
+    merge(
+      {
+        title: title,
+        message: message,
+        showCancelButton: true,
+        showInput: true,
+        $type: 'prompt'
+      },
+      options
+    )
+  );
 };
 
 MessageBox.close = () => {

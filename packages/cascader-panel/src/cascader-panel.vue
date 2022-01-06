@@ -1,32 +1,16 @@
 <template>
-  <div
-    :class="[
-      'el-cascader-panel',
-      border && 'is-bordered'
-    ]"
-    @keydown="handleKeyDown">
-    <cascader-menu
-      ref="menu"
-      v-for="(menu, index) in menus"
-      :index="index"
-      :key="index"
-      :nodes="menu"></cascader-menu>
+  <div :class="['el-cascader-panel', border && 'is-bordered']" @keydown="handleKeyDown">
+    <cascader-menu ref="menu" v-for="(menu, index) in menus" :index="index" :key="index" :nodes="menu"></cascader-menu>
   </div>
 </template>
 
 <script>
 import CascaderMenu from './cascader-menu';
 import Store from './store';
-import merge from 'element-ui/src/utils/merge';
-import AriaUtils from 'element-ui/src/utils/aria-utils';
-import scrollIntoView from 'element-ui/src/utils/scroll-into-view';
-import {
-  noop,
-  coerceTruthyValueToArray,
-  isEqual,
-  isEmpty,
-  valueEquals
-} from 'element-ui/src/utils/util';
+import merge from 'nasinet-element-ui_fb/src/utils/merge';
+import AriaUtils from 'nasinet-element-ui_fb/src/utils/aria-utils';
+import scrollIntoView from 'nasinet-element-ui_fb/src/utils/scroll-into-view';
+import { noop, coerceTruthyValueToArray, isEqual, isEmpty, valueEquals } from 'nasinet-element-ui_fb/src/utils/util';
 
 const { keys: KeyCode } = AriaUtils;
 const DefaultProps = {
@@ -224,9 +208,7 @@ export default {
     },
     calculateCheckedNodePaths() {
       const { checkedValue, multiple } = this;
-      const checkedValues = multiple
-        ? coerceTruthyValueToArray(checkedValue)
-        : [ checkedValue ];
+      const checkedValues = multiple ? coerceTruthyValueToArray(checkedValue) : [checkedValue];
       this.checkedNodePaths = checkedValues.map(v => {
         const checkedNode = this.getNodeByValue(v);
         return checkedNode ? checkedNode.pathNodes : [];
@@ -337,10 +319,9 @@ export default {
 
     /**
      * public methods
-    */
+     */
     calculateMultiCheckedValue() {
-      this.checkedValue = this.getCheckedNodes(this.leafOnly)
-        .map(node => node.getValueByOption());
+      this.checkedValue = this.getCheckedNodes(this.leafOnly).map(node => node.getValueByOption());
     },
     scrollIntoView() {
       if (this.$isServer) return;
@@ -350,8 +331,7 @@ export default {
         const menuElement = menu.$el;
         if (menuElement) {
           const container = menuElement.querySelector('.el-scrollbar__wrap');
-          const activeNode = menuElement.querySelector('.el-cascader-node.is-active') ||
-            menuElement.querySelector('.el-cascader-node.in-active-path');
+          const activeNode = menuElement.querySelector('.el-cascader-node.is-active') || menuElement.querySelector('.el-cascader-node.in-active-path');
           scrollIntoView(container, activeNode);
         }
       });
@@ -369,9 +349,7 @@ export default {
         const nodes = this.getFlattedNodes(leafOnly);
         return nodes.filter(node => node.checked);
       } else {
-        return this.isEmptyValue(checkedValue)
-          ? []
-          : [this.getNodeByValue(checkedValue)];
+        return this.isEmptyValue(checkedValue) ? [] : [this.getNodeByValue(checkedValue)];
       }
     },
     clearCheckedNodes() {

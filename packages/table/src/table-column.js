@@ -1,6 +1,6 @@
 import { cellStarts, cellForced, defaultRenderCell, treeCellPrefix } from './config';
 import { mergeOptions, parseWidth, parseMinWidth, compose } from './util';
-import ElCheckbox from 'element-ui/packages/checkbox';
+import ElCheckbox from 'nasinet-element-ui_fb/packages/checkbox';
 
 let columnIdSeed = 1;
 
@@ -104,7 +104,7 @@ export default {
     getPropsData(...props) {
       return props.reduce((prev, cur) => {
         if (Array.isArray(cur)) {
-          cur.forEach((key) => {
+          cur.forEach(key => {
             prev[key] = this[key];
           });
         }
@@ -158,13 +158,9 @@ export default {
       // TODO: 这里的实现调整
       if (column.type === 'expand') {
         // 对于展开行，renderCell 不允许配置的。在上一步中已经设置过，这里需要简单封装一下。
-        column.renderCell = (h, data) => (<div class="cell">
-          { originRenderCell(h, data) }
-        </div>);
+        column.renderCell = (h, data) => <div class="cell">{originRenderCell(h, data)}</div>;
         this.owner.renderExpanded = (h, data) => {
-          return this.$scopedSlots.default
-            ? this.$scopedSlots.default(data)
-            : this.$slots.default;
+          return this.$scopedSlots.default ? this.$scopedSlots.default(data) : this.$slots.default;
         };
       } else {
         originRenderCell = originRenderCell || defaultRenderCell;
@@ -183,12 +179,14 @@ export default {
           };
           if (column.showOverflowTooltip) {
             props.class += ' el-tooltip';
-            props.style = {width: (data.column.realWidth || data.column.width) - 1 + 'px'};
+            props.style = { width: (data.column.realWidth || data.column.width) - 1 + 'px' };
           }
-          return (<div { ...props }>
-            { prefix }
-            { children }
-          </div>);
+          return (
+            <div {...props}>
+              {prefix}
+              {children}
+            </div>
+          );
         };
       }
       return column;
@@ -211,7 +209,7 @@ export default {
       Object.keys(allAliases).forEach(key => {
         const columnKey = aliases[key];
 
-        this.$watch(key, (newVal) => {
+        this.$watch(key, newVal => {
           this.columnConfig[columnKey] = newVal;
         });
       });
@@ -231,7 +229,7 @@ export default {
       Object.keys(allAliases).forEach(key => {
         const columnKey = aliases[key];
 
-        this.$watch(key, (newVal) => {
+        this.$watch(key, newVal => {
           this.columnConfig[columnKey] = newVal;
           const updateColumns = columnKey === 'fixed';
           this.owner.store.scheduleLayout(updateColumns);
@@ -287,7 +285,11 @@ export default {
     column = mergeOptions(defaults, column);
 
     // 注意 compose 中函数执行的顺序是从右到左
-    const chains = compose(this.setColumnRenders, this.setColumnWidth, this.setColumnForcedProps);
+    const chains = compose(
+      this.setColumnRenders,
+      this.setColumnWidth,
+      this.setColumnForcedProps
+    );
     column = chains(column);
 
     this.columnConfig = column;

@@ -95,11 +95,11 @@ export interface InstallationOptions {
   size: string
 }
 
-/** The version of element-ui */
+/** The version of nasinet-element-ui_fb */
 export const version: string
 
 /**
- * Install all element-ui components into Vue.
+ * Install all nasinet-element-ui_fb components into Vue.
  * Please do not invoke this method directly.
  * Call `Vue.use(ElementUI)` to install.
  */

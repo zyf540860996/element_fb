@@ -1,5 +1,5 @@
-import fecha from 'element-ui/src/utils/date';
-import { t } from 'element-ui/src/locale';
+import fecha from 'nasinet-element-ui_fb/src/utils/date';
+import { t } from 'nasinet-element-ui_fb/src/locale';
 
 const weeks = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
@@ -14,10 +14,10 @@ const newArray = function(start, end) {
 
 export const getI18nSettings = () => {
   return {
-    dayNamesShort: weeks.map(week => t(`el.datepicker.weeks.${ week }`)),
-    dayNames: weeks.map(week => t(`el.datepicker.weeks.${ week }`)),
-    monthNamesShort: months.map(month => t(`el.datepicker.months.${ month }`)),
-    monthNames: months.map((month, index) => t(`el.datepicker.month${ index + 1 }`)),
+    dayNamesShort: weeks.map(week => t(`el.datepicker.weeks.${week}`)),
+    dayNames: weeks.map(week => t(`el.datepicker.weeks.${week}`)),
+    monthNamesShort: months.map(month => t(`el.datepicker.months.${month}`)),
+    monthNames: months.map((month, index) => t(`el.datepicker.month${index + 1}`)),
     amPm: ['am', 'pm']
   };
 };
@@ -53,7 +53,7 @@ export const getDayCountOfMonth = function(year, month) {
   }
 
   if (month === 1) {
-    if (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0) {
+    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
       return 29;
     } else {
       return 28;
@@ -101,12 +101,12 @@ export const getWeekNumber = function(src) {
   const date = new Date(src.getTime());
   date.setHours(0, 0, 0, 0);
   // Thursday in current week decides the year.
-  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
   // January 4 is always in week 1.
   const week1 = new Date(date.getFullYear(), 0, 4);
   // Adjust to Thursday in week 1 and count number of weeks from date to week 1.
   // Rounding should be fine for Daylight Saving Time. Its shift should never be more than 12 hours.
-  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
 };
 
 export const getRangeHours = function(ranges) {
@@ -140,7 +140,7 @@ export const getPrevMonthLastDays = (date, amount) => {
   return range(amount).map((_, index) => lastDay - (amount - index - 1));
 };
 
-export const getMonthDays = (date) => {
+export const getMonthDays = date => {
   const temp = new Date(date.getFullYear(), date.getMonth() + 1, 0);
   const days = temp.getDate();
   return range(days).map((_, index) => index + 1);
@@ -181,7 +181,7 @@ export const getRangeMinutes = function(ranges, hour) {
 
 export const range = function(n) {
   // see https://stackoverflow.com/questions/3746725/create-a-javascript-array-containing-1-n
-  return Array.apply(null, {length: n}).map((_, n) => n);
+  return Array.apply(null, { length: n }).map((_, n) => n);
 };
 
 export const modifyDate = function(date, y, m, d) {
@@ -226,12 +226,7 @@ export const limitTimeRange = function(date, ranges, format = 'HH:mm:ss') {
 
   const ret = ndate < minDate ? minDate : maxDate;
   // preserve Year/Month/Date
-  return modifyDate(
-    ret,
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate()
-  );
+  return modifyDate(ret, date.getFullYear(), date.getMonth(), date.getDate());
 };
 
 export const timeWithinRange = function(date, selectableRange, format) {
@@ -249,17 +244,13 @@ export const changeYearMonthAndClampDate = function(date, year, month) {
 export const prevMonth = function(date) {
   const year = date.getFullYear();
   const month = date.getMonth();
-  return month === 0
-    ? changeYearMonthAndClampDate(date, year - 1, 11)
-    : changeYearMonthAndClampDate(date, year, month - 1);
+  return month === 0 ? changeYearMonthAndClampDate(date, year - 1, 11) : changeYearMonthAndClampDate(date, year, month - 1);
 };
 
 export const nextMonth = function(date) {
   const year = date.getFullYear();
   const month = date.getMonth();
-  return month === 11
-    ? changeYearMonthAndClampDate(date, year + 1, 0)
-    : changeYearMonthAndClampDate(date, year, month + 1);
+  return month === 11 ? changeYearMonthAndClampDate(date, year + 1, 0) : changeYearMonthAndClampDate(date, year, month + 1);
 };
 
 export const prevYear = function(date, amount = 1) {
@@ -282,11 +273,9 @@ export const extractDateFormat = function(format) {
 };
 
 export const extractTimeFormat = function(format) {
-  return format
-    .replace(/\W?D{1,2}|\W?Do|\W?d{1,4}|\W?M{1,4}|\W?y{2,4}/g, '')
-    .trim();
+  return format.replace(/\W?D{1,2}|\W?Do|\W?d{1,4}|\W?M{1,4}|\W?y{2,4}/g, '').trim();
 };
 
 export const validateRangeInOneMonth = function(start, end) {
-  return (start.getMonth() === end.getMonth()) && (start.getFullYear() === end.getFullYear());
+  return start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
 };

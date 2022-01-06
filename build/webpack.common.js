@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(process.cwd(), './lib'),
     publicPath: '/dist/',
-    filename: 'element-ui.common.js',
+    filename: 'nasinet-element-ui_fb.common.js',
     chunkFilename: '[id].js',
     libraryExport: 'default',
     library: 'ELEMENT',
@@ -64,8 +64,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new ProgressBarPlugin(),
-    new VueLoaderPlugin()
-  ]
+  plugins: [new ProgressBarPlugin(), new VueLoaderPlugin()]
 };

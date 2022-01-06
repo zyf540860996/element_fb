@@ -24,16 +24,14 @@ Displays at the top, and disappears after 3 seconds.
       openVn() {
         const h = this.$createElement;
         this.$message({
-          message: h('p', null, [
-            h('span', null, 'Message can be '),
-            h('i', { style: 'color: teal' }, 'VNode')
-          ])
+          message: h('p', null, [h('span', null, 'Message can be '), h('i', { style: 'color: teal' }, 'VNode')])
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Types
@@ -41,6 +39,7 @@ Displays at the top, and disappears after 3 seconds.
 Used to show the feedback of Success, Warning, Message and Error activities.
 
 :::demo When you need more customizations, Message component can also take an object as parameter. For example, setting value of `type` can define different types, and its default is `info`. In such cases the main body is passed in as the value of `message`. Also, we have registered methods for different types, so you can directly call it without passing a type like `open4`.
+
 ```html
 <template>
   <el-button :plain="true" @click="open2">success</el-button>
@@ -73,9 +72,10 @@ Used to show the feedback of Success, Warning, Message and Error activities.
         this.$message.error('Oops, this is a error message.');
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Closable
@@ -83,6 +83,7 @@ Used to show the feedback of Success, Warning, Message and Error activities.
 A close button can be added.
 
 :::demo A default Message cannot be closed manually. If you need a closable message, you can set `showClose` field. Besides, same as notification, message has a controllable `duration`. Default duration is 3000 ms, and it won't disappear when set to `0`.
+
 ```html
 <template>
   <el-button :plain="true" @click="open1">message</el-button>
@@ -125,12 +126,14 @@ A close button can be added.
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Centered text
+
 Use the `center` attribute to center the text.
 
 :::demo
@@ -150,12 +153,14 @@ Use the `center` attribute to center the text.
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 ### Use HTML string
+
 `message` supports HTML string.
 
 :::demo Set `dangerouslyUseHTMLString` to true and `message` will be treated as an HTML string.
@@ -175,9 +180,10 @@ Use the `center` attribute to center the text.
         });
       }
     }
-  }
+  };
 </script>
 ```
+
 :::
 
 :::warning
@@ -193,26 +199,28 @@ Element has added a global method `$message` for Vue.prototype. So in a vue inst
 Import `Message`:
 
 ```javascript
-import { Message } from 'element-ui';
+import { Message } from 'nasinet-element-ui_fb';
 ```
 
 In this case you should call `Message(options)`. We have also registered methods for different types, e.g. `Message.success(options)`. You can call `Message.closeAll()` to manually close all the instances.
 
 ### Options
-| Attribute      | Description          | Type      | Accepted Values       | Default  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| message | message text | string / VNode | — | — |
-| type | message type | string | success/warning/info/error | info |
-| iconClass | custom icon's class, overrides `type` | string | — | — |
-| dangerouslyUseHTMLString | whether `message` is treated as HTML string | boolean | — | false |
-| customClass | custom class name for Message | string | — | — |
-| duration | display duration, millisecond. If set to 0, it will not turn off automatically | number | — | 3000 |
-| showClose | whether to show a close button | boolean | — | false |
-| center | whether to center the text | boolean | — | false |
-| onClose | callback function when closed with the message instance as the parameter | function | — | — |
-| offset | set the distance to the top of viewport | number | — | 20 |
+
+| Attribute                | Description                                                                    | Type           | Accepted Values            | Default |
+| ------------------------ | ------------------------------------------------------------------------------ | -------------- | -------------------------- | ------- |
+| message                  | message text                                                                   | string / VNode | —                          | —       |
+| type                     | message type                                                                   | string         | success/warning/info/error | info    |
+| iconClass                | custom icon's class, overrides `type`                                          | string         | —                          | —       |
+| dangerouslyUseHTMLString | whether `message` is treated as HTML string                                    | boolean        | —                          | false   |
+| customClass              | custom class name for Message                                                  | string         | —                          | —       |
+| duration                 | display duration, millisecond. If set to 0, it will not turn off automatically | number         | —                          | 3000    |
+| showClose                | whether to show a close button                                                 | boolean        | —                          | false   |
+| center                   | whether to center the text                                                     | boolean        | —                          | false   |
+| onClose                  | callback function when closed with the message instance as the parameter       | function       | —                          | —       |
+| offset                   | set the distance to the top of viewport                                        | number         | —                          | 20      |
 
 ### Methods
+
 `Message` and `this.$message` returns the current Message instance. To manually close the instance, you can call `close` on it.
 | Method | Description |
 | ---- | ---- |

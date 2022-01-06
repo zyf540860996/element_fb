@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import merge from 'element-ui/src/utils/merge';
+import merge from 'nasinet-element-ui_fb/src/utils/merge';
 import { getKeysMap, getRowIdentity, getColumnById, getColumnByKey, orderBy, toggleRowStatus } from '../util';
 import expand from './expand';
 import current from './current';
@@ -13,9 +13,9 @@ const sortData = (data, states) => {
   return orderBy(data, states.sortProp, states.sortOrder, sortingColumn.sortMethod, sortingColumn.sortBy);
 };
 
-const doFlattenColumns = (columns) => {
+const doFlattenColumns = columns => {
   const result = [];
-  columns.forEach((column) => {
+  columns.forEach(column => {
     if (column.children) {
       result.push.apply(result, doFlattenColumns(column.children));
     } else {
@@ -85,8 +85,8 @@ export default Vue.extend({
     updateColumns() {
       const states = this.states;
       const _columns = states._columns || [];
-      states.fixedColumns = _columns.filter((column) => column.fixed === true || column.fixed === 'left');
-      states.rightFixedColumns = _columns.filter((column) => column.fixed === 'right');
+      states.fixedColumns = _columns.filter(column => column.fixed === true || column.fixed === 'left');
+      states.rightFixedColumns = _columns.filter(column => column.fixed === 'right');
 
       if (states.fixedColumns.length > 0 && _columns[0] && _columns[0].type === 'selection' && !_columns[0].fixed) {
         _columns[0].fixed = true;
@@ -94,7 +94,10 @@ export default Vue.extend({
       }
 
       const notFixedColumns = _columns.filter(column => !column.fixed);
-      states.originColumns = [].concat(states.fixedColumns).concat(notFixedColumns).concat(states.rightFixedColumns);
+      states.originColumns = []
+        .concat(states.fixedColumns)
+        .concat(notFixedColumns)
+        .concat(states.rightFixedColumns);
 
       const leafColumns = doFlattenColumns(notFixedColumns);
       const fixedLeafColumns = doFlattenColumns(states.fixedColumns);
@@ -104,7 +107,10 @@ export default Vue.extend({
       states.fixedLeafColumnsLength = fixedLeafColumns.length;
       states.rightFixedLeafColumnsLength = rightFixedLeafColumns.length;
 
-      states.columns = [].concat(fixedLeafColumns).concat(leafColumns).concat(rightFixedLeafColumns);
+      states.columns = []
+        .concat(fixedLeafColumns)
+        .concat(leafColumns)
+        .concat(rightFixedLeafColumns);
       states.isComplex = states.fixedColumns.length > 0 || states.rightFixedColumns.length > 0;
     },
 
@@ -172,9 +178,7 @@ export default Vue.extend({
       const { data = [], selection } = states;
       // when only some rows are selected (but not all), select or deselect all of them
       // depending on the value of selectOnIndeterminate
-      const value = states.selectOnIndeterminate
-        ? !states.isAllSelected
-        : !(states.isAllSelected || selection.length);
+      const value = states.selectOnIndeterminate ? !states.isAllSelected : !(states.isAllSelected || selection.length);
       states.isAllSelected = value;
 
       let selectionChanged = false;
@@ -278,12 +282,12 @@ export default Vue.extend({
       const { _data, filters } = states;
       let data = _data;
 
-      Object.keys(filters).forEach((columnId) => {
+      Object.keys(filters).forEach(columnId => {
         const values = states.filters[columnId];
         if (!values || values.length === 0) return;
         const column = getColumnById(this.states, columnId);
         if (column && column.filterMethod) {
-          data = data.filter((row) => {
+          data = data.filter(row => {
             return values.some(value => column.filterMethod.call(null, value, row, column));
           });
         }

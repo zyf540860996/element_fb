@@ -29,9 +29,9 @@
       ],
       "plugins": [
         ["module-resolver", {
-          "root": ["element-ui"],
+          "root": ["nasinet-element-ui_fb"],
           "alias": {
-            "element-ui/src": "element-ui/lib"
+            "nasinet-element-ui_fb/src": "nasinet-element-ui_fb/lib"
           }
         }]
       ]

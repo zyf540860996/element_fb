@@ -1,44 +1,27 @@
 <template>
-  <el-popover
-    v-bind="$attrs"
-    v-model="visible"
-    trigger="click"
-  >
-  <div class="el-popconfirm">
-    <p class="el-popconfirm__main">
-    <i
-      v-if="!hideIcon"
-      :class="icon"
-      class="el-popconfirm__icon"
-      :style="{color: iconColor}"
-    ></i>
-      {{title}}
-    </p>
-    <div class="el-popconfirm__action">
-      <el-button 
-        size="mini" 
-        :type="cancelButtonType" 
-        @click="cancel"
-      >
-        {{ displayCancelButtonText }}
-      </el-button>
-      <el-button 
-        size="mini" 
-        :type="confirmButtonType" 
-        @click="confirm"
-      >
-        {{ displayConfirmButtonText }}
-      </el-button>
+  <el-popover v-bind="$attrs" v-model="visible" trigger="click">
+    <div class="el-popconfirm">
+      <p class="el-popconfirm__main">
+        <i v-if="!hideIcon" :class="icon" class="el-popconfirm__icon" :style="{ color: iconColor }"></i>
+        {{ title }}
+      </p>
+      <div class="el-popconfirm__action">
+        <el-button size="mini" :type="cancelButtonType" @click="cancel">
+          {{ displayCancelButtonText }}
+        </el-button>
+        <el-button size="mini" :type="confirmButtonType" @click="confirm">
+          {{ displayConfirmButtonText }}
+        </el-button>
+      </div>
     </div>
-  </div>
-  <slot name="reference" slot="reference"></slot>
-</el-popover>
+    <slot name="reference" slot="reference"></slot>
+  </el-popover>
 </template>
 
 <script>
-import ElPopover from 'element-ui/packages/popover';
-import ElButton from 'element-ui/packages/button';
-import {t} from 'element-ui/src/locale';
+import ElPopover from 'nasinet-element-ui_fb/packages/popover';
+import ElButton from 'nasinet-element-ui_fb/packages/button';
+import { t } from 'nasinet-element-ui_fb/src/locale';
 
 export default {
   name: 'ElPopconfirm',

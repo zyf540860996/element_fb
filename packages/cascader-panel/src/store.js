@@ -1,5 +1,5 @@
 import Node from './node';
-import { coerceTruthyValueToArray, valueEquals } from 'element-ui/src/utils/util';
+import { coerceTruthyValueToArray, valueEquals } from 'nasinet-element-ui_fb/src/utils/util';
 
 const flatNodes = (data, leafOnly) => {
   return data.reduce((res, node) => {
@@ -14,7 +14,6 @@ const flatNodes = (data, leafOnly) => {
 };
 
 export default class Store {
-
   constructor(data, config) {
     this.config = config;
     this.initNodes(data);
@@ -45,14 +44,11 @@ export default class Store {
 
   getFlattedNodes(leafOnly, cached = true) {
     const cachedNodes = leafOnly ? this.leafNodes : this.flattedNodes;
-    return cached
-      ? cachedNodes
-      : flatNodes(this.nodes, leafOnly);
+    return cached ? cachedNodes : flatNodes(this.nodes, leafOnly);
   }
 
   getNodeByValue(value) {
-    const nodes = this.getFlattedNodes(false, !this.config.lazy)
-      .filter(node => (valueEquals(node.path, value) || node.value === value));
+    const nodes = this.getFlattedNodes(false, !this.config.lazy).filter(node => valueEquals(node.path, value) || node.value === value);
     return nodes && nodes.length ? nodes[0] : null;
   }
 }

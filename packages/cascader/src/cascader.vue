@@ -1,17 +1,13 @@
 <template>
   <div
     ref="reference"
-    :class="[
-      'el-cascader',
-      realSize && `el-cascader--${realSize}`,
-      { 'is-disabled': isDisabled }
-    ]"
+    :class="['el-cascader', realSize && `el-cascader--${realSize}`, { 'is-disabled': isDisabled }]"
     v-clickoutside="() => toggleDropDownVisible(false)"
     @mouseenter="inputHover = true"
     @mouseleave="inputHover = false"
     @click="() => toggleDropDownVisible(readonly ? undefined : true)"
-    @keydown="handleKeyDown">
-
+    @keydown="handleKeyDown"
+  >
     <el-input
       ref="input"
       v-model="multiple ? presentText : inputValue"
@@ -23,35 +19,16 @@
       :class="{ 'is-focus': dropDownVisible }"
       @focus="handleFocus"
       @blur="handleBlur"
-      @input="handleInput">
+      @input="handleInput"
+    >
       <template slot="suffix">
-        <i
-          v-if="clearBtnVisible"
-          key="clear"
-          class="el-input__icon el-icon-circle-close"
-          @click.stop="handleClear"></i>
-        <i
-          v-else
-          key="arrow-down"
-          :class="[
-            'el-input__icon',
-            'el-icon-arrow-down',
-            dropDownVisible && 'is-reverse'
-          ]"
-          @click.stop="toggleDropDownVisible()"></i>
+        <i v-if="clearBtnVisible" key="clear" class="el-input__icon el-icon-circle-close" @click.stop="handleClear"></i>
+        <i v-else key="arrow-down" :class="['el-input__icon', 'el-icon-arrow-down', dropDownVisible && 'is-reverse']" @click.stop="toggleDropDownVisible()"></i>
       </template>
     </el-input>
 
     <div v-if="multiple" class="el-cascader__tags">
-      <el-tag
-        v-for="tag in presentTags"
-        :key="tag.key"
-        type="info"
-        :size="tagSize"
-        :hit="tag.hitState"
-        :closable="tag.closable"
-        disable-transitions
-        @close="deleteTag(tag)">
+      <el-tag v-for="tag in presentTags" :key="tag.key" type="info" :size="tagSize" :hit="tag.hitState" :closable="tag.closable" disable-transitions @close="deleteTag(tag)">
         <span>{{ tag.text }}</span>
       </el-tag>
       <input
@@ -62,14 +39,12 @@
         :placeholder="presentTags.length ? '' : placeholder"
         @input="e => handleInput(inputValue, e)"
         @click.stop="toggleDropDownVisible(true)"
-        @keydown.delete="handleDelete">
+        @keydown.delete="handleDelete"
+      />
     </div>
 
     <transition name="el-zoom-in-top" @after-leave="handleDropdownLeave">
-      <div
-        v-show="dropDownVisible"
-        ref="popper"
-        :class="['el-popper', 'el-cascader__dropdown', popperClass]">
+      <div v-show="dropDownVisible" ref="popper" :class="['el-popper', 'el-cascader__dropdown', popperClass]">
         <el-cascader-panel
           ref="panel"
           v-show="!filtering"
@@ -79,7 +54,8 @@
           :border="false"
           :render-label="$scopedSlots.default"
           @expand-change="handleExpandChange"
-          @close="toggleDropDownVisible(false)"></el-cascader-panel>
+          @close="toggleDropDownVisible(false)"
+        ></el-cascader-panel>
         <el-scrollbar
           ref="suggestionPanel"
           v-if="filterable"
@@ -87,17 +63,10 @@
           tag="ul"
           class="el-cascader__suggestion-panel"
           view-class="el-cascader__suggestion-list"
-          @keydown.native="handleSuggestionKeyDown">
+          @keydown.native="handleSuggestionKeyDown"
+        >
           <template v-if="suggestions.length">
-            <li
-              v-for="(item, index) in suggestions"
-              :key="item.uid"
-              :class="[
-                'el-cascader__suggestion-item',
-                item.checked && 'is-checked'
-              ]"
-              :tabindex="-1"
-              @click="handleSuggestionClick(index)">
+            <li v-for="(item, index) in suggestions" :key="item.uid" :class="['el-cascader__suggestion-item', item.checked && 'is-checked']" :tabindex="-1" @click="handleSuggestionClick(index)">
               <span>{{ item.text }}</span>
               <i v-if="item.checked" class="el-icon-check"></i>
             </li>
@@ -112,21 +81,21 @@
 </template>
 
 <script>
-import Popper from 'element-ui/src/utils/vue-popper';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
-import Emitter from 'element-ui/src/mixins/emitter';
-import Locale from 'element-ui/src/mixins/locale';
-import Migrating from 'element-ui/src/mixins/migrating';
-import ElInput from 'element-ui/packages/input';
-import ElTag from 'element-ui/packages/tag';
-import ElScrollbar from 'element-ui/packages/scrollbar';
-import ElCascaderPanel from 'element-ui/packages/cascader-panel';
-import AriaUtils from 'element-ui/src/utils/aria-utils';
-import { t } from 'element-ui/src/locale';
-import { isEqual, isEmpty, kebabCase } from 'element-ui/src/utils/util';
-import { isUndefined, isFunction } from 'element-ui/src/utils/types';
-import { isDef } from 'element-ui/src/utils/shared';
-import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
+import Popper from 'nasinet-element-ui_fb/src/utils/vue-popper';
+import Clickoutside from 'nasinet-element-ui_fb/src/utils/clickoutside';
+import Emitter from 'nasinet-element-ui_fb/src/mixins/emitter';
+import Locale from 'nasinet-element-ui_fb/src/mixins/locale';
+import Migrating from 'nasinet-element-ui_fb/src/mixins/migrating';
+import ElInput from 'nasinet-element-ui_fb/packages/input';
+import ElTag from 'nasinet-element-ui_fb/packages/tag';
+import ElScrollbar from 'nasinet-element-ui_fb/packages/scrollbar';
+import ElCascaderPanel from 'nasinet-element-ui_fb/packages/cascader-panel';
+import AriaUtils from 'nasinet-element-ui_fb/src/utils/aria-utils';
+import { t } from 'nasinet-element-ui_fb/src/locale';
+import { isEqual, isEmpty, kebabCase } from 'nasinet-element-ui_fb/src/utils/util';
+import { isUndefined, isFunction } from 'nasinet-element-ui_fb/src/utils/types';
+import { isDef } from 'nasinet-element-ui_fb/src/utils/shared';
+import { addResizeListener, removeResizeListener } from 'nasinet-element-ui_fb/src/utils/resize-event';
 import debounce from 'throttle-debounce/debounce';
 
 const { keys: KeyCode } = AriaUtils;
@@ -223,7 +192,7 @@ export default {
     },
     beforeFilter: {
       type: Function,
-      default: () => (() => {})
+      default: () => () => {}
     },
     popperClass: String
   },
@@ -250,9 +219,7 @@ export default {
       return this.size || _elFormItemSize || (this.$ELEMENT || {}).size;
     },
     tagSize() {
-      return ['small', 'mini'].indexOf(this.realSize) > -1
-        ? 'mini'
-        : 'small';
+      return ['small', 'mini'].indexOf(this.realSize) > -1 ? 'mini' : 'small';
     },
     isDisabled() {
       return this.disabled || (this.elForm || {}).disabled;
@@ -261,18 +228,16 @@ export default {
       const config = this.props || {};
       const { $attrs } = this;
 
-      Object
-        .keys(MigratingProps)
-        .forEach(oldProp => {
-          const { newProp, type } = MigratingProps[oldProp];
-          let oldValue = $attrs[oldProp] || $attrs[kebabCase(oldProp)];
-          if (isDef(oldProp) && !isDef(config[newProp])) {
-            if (type === Boolean && oldValue === '') {
-              oldValue = true;
-            }
-            config[newProp] = oldValue;
+      Object.keys(MigratingProps).forEach(oldProp => {
+        const { newProp, type } = MigratingProps[oldProp];
+        let oldValue = $attrs[oldProp] || $attrs[kebabCase(oldProp)];
+        if (isDef(oldProp) && !isDef(config[newProp])) {
+          if (type === Boolean && oldValue === '') {
+            oldValue = true;
           }
-        });
+          config[newProp] = oldValue;
+        }
+      });
 
       return config;
     },
@@ -290,9 +255,7 @@ export default {
         return false;
       }
 
-      return this.multiple
-        ? !!this.checkedNodes.filter(node => !node.isDisabled).length
-        : !!this.presentText;
+      return this.multiple ? !!this.checkedNodes.filter(node => !node.isDisabled).length : !!this.presentText;
     },
     panel() {
       return this.$refs.panel;
@@ -546,12 +509,11 @@ export default {
         filterMethod = (node, keyword) => node.text.includes(keyword);
       }
 
-      const suggestions = this.panel.getFlattedNodes(this.leafOnly)
-        .filter(node => {
-          if (node.isDisabled) return false;
-          node.text = node.getText(this.showAllLevels, this.separator) || '';
-          return filterMethod(node, this.inputValue);
-        });
+      const suggestions = this.panel.getFlattedNodes(this.leafOnly).filter(node => {
+        if (node.isDisabled) return false;
+        node.text = node.getText(this.showAllLevels, this.separator) || '';
+        return filterMethod(node, this.inputValue);
+      });
 
       if (this.multiple) {
         this.presentTags.forEach(tag => {
@@ -652,11 +614,10 @@ export default {
 
     /**
      * public methods
-    */
+     */
     getCheckedNodes(leafOnly) {
       return this.panel.getCheckedNodes(leafOnly);
     }
   }
 };
 </script>
-

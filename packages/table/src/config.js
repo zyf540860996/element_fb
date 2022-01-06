@@ -1,4 +1,4 @@
-import { getPropByPath } from 'element-ui/src/utils/util';
+import { getPropByPath } from 'nasinet-element-ui_fb/src/utils/util';
 
 export const cellStarts = {
   default: {
@@ -29,19 +29,26 @@ export const cellStarts = {
 export const cellForced = {
   selection: {
     renderHeader: function(h, { store }) {
-      return <el-checkbox
-        disabled={ store.states.data && store.states.data.length === 0 }
-        indeterminate={ store.states.selection.length > 0 && !this.isAllSelected }
-        on-input={ this.toggleAllSelection }
-        value={ this.isAllSelected } />;
+      return (
+        <el-checkbox
+          disabled={store.states.data && store.states.data.length === 0}
+          indeterminate={store.states.selection.length > 0 && !this.isAllSelected}
+          on-input={this.toggleAllSelection}
+          value={this.isAllSelected}
+        />
+      );
     },
     renderCell: function(h, { row, column, isSelected, store, $index }) {
-      return <el-checkbox
-        nativeOn-click={ (event) => event.stopPropagation() }
-        value={ isSelected }
-        disabled={ column.selectable ? !column.selectable.call(null, row, $index) : false }
-        on-input={ () => { store.commit('rowSelectedChanged', row); } }
-      />;
+      return (
+        <el-checkbox
+          nativeOn-click={event => event.stopPropagation()}
+          value={isSelected}
+          disabled={column.selectable ? !column.selectable.call(null, row, $index) : false}
+          on-input={() => {
+            store.commit('rowSelectedChanged', row);
+          }}
+        />
+      );
     },
     sortable: false,
     resizable: false
@@ -60,7 +67,7 @@ export const cellForced = {
         i = index($index);
       }
 
-      return <div>{ i }</div>;
+      return <div>{i}</div>;
     },
     sortable: false
   },
@@ -77,10 +84,11 @@ export const cellForced = {
         e.stopPropagation();
         store.toggleRowExpansion(row);
       };
-      return (<div class={ classes }
-        on-click={callback}>
-        <i class='el-icon el-icon-arrow-right'></i>
-      </div>);
+      return (
+        <div class={classes} on-click={callback}>
+          <i class="el-icon el-icon-arrow-right" />
+        </div>
+      );
     },
     sortable: false,
     resizable: false,
@@ -105,7 +113,7 @@ export function treeCellPrefix(h, { row, treeNode, store }) {
     store.loadOrToggle(row);
   };
   if (treeNode.indent) {
-    ele.push(<span class="el-table__indent" style={{'padding-left': treeNode.indent + 'px'}}></span>);
+    ele.push(<span class="el-table__indent" style={{ 'padding-left': treeNode.indent + 'px' }} />);
   }
   if (typeof treeNode.expanded === 'boolean' && !treeNode.noLazyChildren) {
     const expandClasses = ['el-table__expand-icon', treeNode.expanded ? 'el-table__expand-icon--expanded' : ''];
@@ -113,12 +121,13 @@ export function treeCellPrefix(h, { row, treeNode, store }) {
     if (treeNode.loading) {
       iconClasses = ['el-icon-loading'];
     }
-    ele.push(<div class={ expandClasses }
-      on-click={ callback }>
-      <i class={ iconClasses }></i>
-    </div>);
+    ele.push(
+      <div class={expandClasses} on-click={callback}>
+        <i class={iconClasses} />
+      </div>
+    );
   } else {
-    ele.push(<span class="el-table__placeholder"></span>);
+    ele.push(<span class="el-table__placeholder" />);
   }
   return ele;
 }

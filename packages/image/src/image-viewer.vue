@@ -8,17 +8,11 @@
       </span>
       <!-- ARROW -->
       <template v-if="!isSingle">
-        <span
-          class="el-image-viewer__btn el-image-viewer__prev"
-          :class="{ 'is-disabled': !infinite && isFirst }"
-          @click="prev">
-          <i class="el-icon-arrow-left"/>
+        <span class="el-image-viewer__btn el-image-viewer__prev" :class="{ 'is-disabled': !infinite && isFirst }" @click="prev">
+          <i class="el-icon-arrow-left" />
         </span>
-        <span
-          class="el-image-viewer__btn el-image-viewer__next"
-          :class="{ 'is-disabled': !infinite && isLast }"
-          @click="next">
-          <i class="el-icon-arrow-right"/>
+        <span class="el-image-viewer__btn el-image-viewer__next" :class="{ 'is-disabled': !infinite && isLast }" @click="next">
+          <i class="el-icon-arrow-right" />
         </span>
       </template>
       <!-- ACTIONS -->
@@ -45,16 +39,17 @@
           :style="imgStyle"
           @load="handleImgLoad"
           @error="handleImgError"
-          @mousedown="handleMouseDown">
+          @mousedown="handleMouseDown"
+        />
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-import { on, off } from 'element-ui/src/utils/dom';
-import { rafThrottle, isFirefox } from 'element-ui/src/utils/util';
-import { PopupManager } from 'element-ui/src/utils/popup';
+import { on, off } from 'nasinet-element-ui_fb/src/utils/dom';
+import { rafThrottle, isFirefox } from 'nasinet-element-ui_fb/src/utils/util';
+import { PopupManager } from 'nasinet-element-ui_fb/src/utils/popup';
 
 const Mode = {
   CONTAIN: {
